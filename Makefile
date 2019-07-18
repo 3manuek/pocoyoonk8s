@@ -18,5 +18,5 @@ test-%: venv
 	cd ansible &&\
 	export ANSIBLE_CONFIG="$*.cfg" &&\
 	ansible-playbook $(ansible_debug) \
-		--extra-vars "component=$* version=11.4" \
+		-i inventories/$* --extra-vars "component=$* version=11.4" \
 		$*.yml

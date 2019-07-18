@@ -1,18 +1,13 @@
 ---
-# tasks file for setup
-
-#K8S_AUTH_API_KEY
-
 - name: Getting the k8s api server
   shell: kubectl config view --minify -o jsonpath='{.clusters[0].cluster.server}'
   register: K8S_AUTH_HOST
+  tags: [setup]
 
 - name: Getting the k8s local token
   shell: kubectl get secret $SECRET_NAME -o jsonpath='{.data.token}' | base64 --decode
   register: K8S_AUTH_API_KEY
-
-# - debug:
-#     var: "{{ start_date.stdout }}"
+  tags: [setup]
 
 - name: Export k8s TOKEN
   shell: echo $K8S_AUTH_API_KEY
@@ -20,11 +15,10 @@
     K8S_AUTH_API_KEY: K8S_AUTH_API_KEY.stdout
     K8S_AUTH_HOST: K8S_AUTH_HOST.stdout    
   register: token
-
-- debug:
-    var: "{{ token.stdout }}"
+  tags: [setup]
 
 - name: Get a list of all pods from any namespace
   k8s_facts:
     kind: Pod
   register: pod_list
+  tags: [setup]
