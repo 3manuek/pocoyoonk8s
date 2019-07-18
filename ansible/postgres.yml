@@ -1,0 +1,8 @@
+---
+- hosts: localhost
+  roles:
+    - { role: setup }
+    - { role: postgres }
+  vars_files:
+    - inventories/{{component}}.yml
+  tags: [postgres] 

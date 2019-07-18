@@ -1,6 +1,0 @@
----
-- hosts: localhost
-  roles:
-    - { role: setup }
-    - { role: postgresql }
-  tags: [deploy] 

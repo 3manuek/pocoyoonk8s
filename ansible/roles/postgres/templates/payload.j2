@@ -5,33 +5,33 @@ items:
 - apiVersion: v1
   kind: Service
   metadata:
-    name: {{ app_name }}{{ version }}-svc
+    name: {{ component }}{{ version }}-svc
     labels: 
-      app: {{ app_name }}{{ version }}
+      app: {{ component }}{{ version }}
   spec:
     type: NodePort
     ports:
-      - name: {{ app_name }}
+      - name: {{ component }}
         port: {{ port }}
     selector: 
-      app: {{ app_name }}{{ version }}
+      app: {{ component }}{{ version }}
 - apiVersion: extensions/v1beta1
   kind: Deployment
   metadata:
-    name: {{ app_name }}{{ version }}-dply
+    name: {{ component }}{{ version }}-dply
   spec:
     template:
       metadata:
         labels:
-          app: {{ app_name }}{{ version }}
+          app: {{ component }}{{ version }}
       spec:
         containers:
-          - name: {{ app_name }}{{ version }}
-            image: {{ app_name }}:{{ version }}
+          - name: {{ component }}{{ version }}
+            image: {{ component }}:{{ version }}
             ports:
               - containerPort: {{ port }}
-                name: {{ app_name }}
+                name: {{ component }}
                 protocol: TCP
             envFrom:
               - configMapRef:
-                  name: {{ app_name }}-config
+                  name: {{ component }}-config
