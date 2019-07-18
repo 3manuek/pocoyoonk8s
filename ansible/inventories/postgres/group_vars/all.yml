@@ -1,6 +1,7 @@
 ---
-port: 5432
-component: "{{component}}"
-pg_database: postgresdb
-pg_user: postgresadmin
-pg_pass: admin123
+postgres:
+  port: 5432
+  component: "{{component}}"
+  pg_database: postgresdb
+  pg_user: postgresadmin
+  pg_pass: admin123

@@ -13,7 +13,7 @@ venv:
 setup:
 	$(VENV_ON) && pip install -r requirements.txt
 
-test-%: venv
+test-%: 
 	$(VENV_ON) &&\
 	cd ansible &&\
 	export ANSIBLE_CONFIG="$*.cfg" &&\
