@@ -1,0 +1,37 @@
+---
+apiVersion: v1
+kind: List
+items:
+- apiVersion: v1
+  kind: Service
+  metadata:
+    name: {{ app_name }}{{ version }}-svc
+    labels: 
+      app: {{ app_name }}{{ version }}
+  spec:
+    type: NodePort
+    ports:
+      - name: {{ app_name }}
+        port: {{ port }}
+    selector: 
+      app: {{ app_name }}{{ version }}
+- apiVersion: extensions/v1beta1
+  kind: Deployment
+  metadata:
+    name: {{ app_name }}{{ version }}-dply
+  spec:
+    template:
+      metadata:
+        labels:
+          app: {{ app_name }}{{ version }}
+      spec:
+        containers:
+          - name: {{ app_name }}{{ version }}
+            image: {{ app_name }}:{{ version }}
+            ports:
+              - containerPort: {{ port }}
+                name: {{ app_name }}
+                protocol: TCP
+            envFrom:
+              - configMapRef:
+                  name: {{ app_name }}-config

@@ -1,0 +1,7 @@
+---
+# defaults
+port: "5432"
+app_name: "postgres"
+pg_database: "postgresdb"
+pg_user: "postgresadmin"
+pg_pass: "admin123"
