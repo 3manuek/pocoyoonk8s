@@ -1,2 +1,30 @@
 ---
 # tasks file for postgresql
+
+# - name: Config Map load into register
+#   register:
+#     cm: "{{ lookup('template', 'postgres-cm.j2') }}"
+
+# - name: Payload into register
+#   register:
+#     payload: "{{ lookup('template', 'payload.j2') }}"
+
+# - name: Create a k8s namespace
+#   k8s:
+#     name: {{ namespace }}
+#     api_version: v1
+#     kind: Namespace
+#     state: present
+
+- name: Config Map creation
+  k8s:
+    state: present
+    namespace: default
+    definition: "{{ lookup('template', 'postgres-cm.j2') }}"
+
+- name: Postgres deploy creation
+  k8s:
+    state: present
+    namespace: default
+    src: "{{ lookup('template', 'payload.j2') }}"
+

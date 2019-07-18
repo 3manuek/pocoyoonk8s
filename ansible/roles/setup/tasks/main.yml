@@ -3,3 +3,28 @@
 
 #K8S_AUTH_API_KEY
 
+- name: Getting the k8s api server
+  shell: kubectl config view --minify -o jsonpath='{.clusters[0].cluster.server}'
+  register: K8S_AUTH_HOST
+
+- name: Getting the k8s local token
+  shell: kubectl get secret $SECRET_NAME -o jsonpath='{.data.token}' | base64 --decode
+  register: K8S_AUTH_API_KEY
+
+# - debug:
+#     var: "{{ start_date.stdout }}"
+
+- name: Export k8s TOKEN
+  shell: echo $start_date_env
+  environment:
+    K8S_AUTH_API_KEY: K8S_AUTH_API_KEY.stdout
+    K8S_AUTH_HOST: K8S_AUTH_HOST.stdout
+#   register: some
+# - debug:
+#     var: "{{ some.stdout }}"
+
+- name: Test k8s connection, pod list
+  k8s_facts:
+    api_version: v1
+    kind: Pod
+  register: pod_list
