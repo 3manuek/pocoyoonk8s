@@ -1,0 +1,11 @@
+---
+
+- hosts: localhost
+  gather_facts: true
+  connection: local
+  vars:
+    app: '{{app}}'
+  roles:
+    # - { role: setup }
+    - { role: generic }
+  tags: [setup, '{{app}}'] 

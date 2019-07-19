@@ -1,9 +1,31 @@
 SHELL=/bin/bash
 VENV_ON=source venv/bin/activate
+DEFAULT_ANSIBLE_STATE=present
+DEFAULT_APP=postgres
+DEFAULT_VERSION=11.4
+MACRO_ANS_INTER=ansible_python_interpreter=/usr/local/bin/python3
 
-ifdef DEBUG
+# this adds vvv to playbook
+ifdef DEBUG_ANS
 	ansible_debug=-vvv
 endif
+ifndef APP
+	APP=$(DEFAULT_APP)
+endif
+ifndef VERSION
+	VERSION=$(DEFAULT_VERSION)
+endif
+
+# this enables debug in roles
+ifdef DEBUG
+	DEBUG=true
+endif
+
+ifndef DEBUG
+	DEBUG=false
+endif
+
+
 
 .PHONY: setup venv test-%
 
@@ -19,6 +41,27 @@ setup: venv-install
 deploy-%: 
 	$(VENV_ON) &&\
 	cd ansible && ANSIBLE_CONFIG="$*.cfg" ansible-playbook $(ansible_debug) \
-		-i inventories/$* --extra-vars "ansible_python_interpreter=/usr/local/bin/python3 app=$* version=11.4" \
+		-i inventories/$* --extra-vars "ansible_state=present $(MACRO_ANS_INTER) app=$* version=11.4" \
 		$*.yml &&\
+	cd .. && deactivate
+
+clean-%: 
+	$(VENV_ON) &&\
+	cd ansible && ANSIBLE_CONFIG="$*.cfg" ansible-playbook $(ansible_debug) \
+		-i inventories/$* --extra-vars "ansible_state=absent $(MACRO_ANS_INTER) app=$* version=11.4" \
+		$*.yml &&\
+	cd .. && deactivate
+
+deploy: 
+	$(VENV_ON) &&\
+	cd ansible && ANSIBLE_CONFIG="$*.cfg" ansible-playbook $(ansible_debug) \
+		-i inventories/$(APP) --extra-vars "DEBUG=$(DEBUG) ansible_state=present $(MACRO_ANS_INTER) app=$(APP) version=$(VERSION)" \
+		generic.yml &&\
+	cd .. && deactivate
+
+clean: 
+	$(VENV_ON) &&\
+	cd ansible && ANSIBLE_CONFIG="$*.cfg" ansible-playbook $(ansible_debug) \
+		-i inventories/$(APP) --extra-vars "DEBUG=$(DEBUG) ansible_state=absent $(MACRO_ANS_INTER) app=$(APP) version=$(VERSION)" \
+		generic.yml &&\
 	cd .. && deactivate
