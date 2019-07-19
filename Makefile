@@ -19,6 +19,6 @@ setup: venv-install
 test-%: 
 	$(VENV_ON) &&\
 	cd ansible && ANSIBLE_CONFIG="$*.cfg" ansible-playbook $(ansible_debug) \
-		-i inventories/ --extra-vars "ansible_python_interpreter=/usr/local/bin/python3 app=$* version=11.4" \
+		-i inventories/$* --extra-vars "ansible_python_interpreter=/usr/local/bin/python3 app=$* version=11.4" \
 		$*.yml &&\
 	cd .. && deactivate
