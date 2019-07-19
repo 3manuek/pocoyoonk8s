@@ -56,4 +56,24 @@ SECRET_NAME=$(kubectl get serviceaccount default -o jsonpath='{.secrets[0].name}
 TOKEN=$(kubectl get secret $SECRET_NAME -o jsonpath='{.data.token}' | base64 --decode)
 ```
 
+https://docs.ansible.com/ansible/latest/user_guide/playbooks_filters.html#kubernetes-filters
 
+{{ configmap_resource_definition | k8s_config_resource_name }}
+
+deploy secrets 
+
+```
+my_secret:
+  kind: Secret
+  name: my_secret_name
+
+deployment_resource:
+  kind: Deployment
+  spec:
+    template:
+      spec:
+        containers:
+        - envFrom:
+            - secretRef:
+                name: {{ my_secret | k8s_config_resource_name }}
+```

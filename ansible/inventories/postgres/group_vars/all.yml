@@ -1,6 +1,7 @@
 ---
-port: 5432
 app: '{{app}}'
 pg_database: 'postgresdb'
 pg_user: 'postgresadmin'
 pg_pass: 'admin123'
+pg_port: 5432
+version: '{{version}}'
