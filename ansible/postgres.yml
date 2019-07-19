@@ -7,6 +7,6 @@
   vars:
     app: '{{app}}'
   roles:
-    - { role: setup }
+    # - { role: setup }
     - { role: postgres }
   tags: [setup, postgres] 
