@@ -19,6 +19,8 @@
 
 - name: Get a list of all pods from any namespace
   k8s_facts:
+    namespace: default
+    api_version: v1
     kind: Pod
   register: pod_list
   tags: [setup]

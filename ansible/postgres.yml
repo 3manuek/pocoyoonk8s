@@ -2,8 +2,11 @@
 
 - hosts: localhost
   gather_facts: true
-  become: true
+  connection: local
+  # become: true
+  vars:
+    component: '{{component}}'
   roles:
     - { role: setup }
     - { role: postgres }
-  tags: [postgres] 
+  tags: [setup, postgres] 

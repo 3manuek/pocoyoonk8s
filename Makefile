@@ -10,13 +10,11 @@ endif
 venv:
 	python3 -m venv venv && $(VENV_ON)
 
-setup:
+setup: venv
 	$(VENV_ON) && pip install -r requirements.txt
 
 test-%: 
 	$(VENV_ON) &&\
-	cd ansible &&\
-	export ANSIBLE_CONFIG="$*.cfg" &&\
-	ansible-playbook $(ansible_debug) \
-		-i inventories/$* --extra-vars "component=$* version=11.4" \
-		$*.yml
+	ANSIBLE_CONFIG="ansible/$*.cfg" ansible-playbook $(ansible_debug) \
+		-i ansible/inventories/$*/ --extra-vars "component=$* version=11.4" \
+		ansible/$*.yml
