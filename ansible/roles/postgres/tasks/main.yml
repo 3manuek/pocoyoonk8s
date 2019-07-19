@@ -105,7 +105,7 @@
             spec:
               containers:
                 - name: "{{ app }}{{ version_dashed }}"
-                  image: "{{ app }}:{{ version_dashed }}"
+                  image: "{{ app }}:{{ version }}"
                   ports:
                     - containerPort: "{{ pg_port }}"
                       name: "{{ app }}"
