@@ -7,10 +7,10 @@ endif
 
 .PHONY: setup venv test-%
 
-venv:
-	python3 -m venv venv && $(VENV_ON)
+venv-install:
+	python3 -m venv venv
 
-setup: venv
+setup: venv-install
 	$(VENV_ON) && pip install --upgrade pip && pip install -r requirements.txt
 
 test-%: 
