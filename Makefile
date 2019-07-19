@@ -16,7 +16,7 @@ venv-install:
 setup: venv-install
 	$(VENV_ON) && python3 -m pip install --upgrade pip && python3 -m pip install --user -r requirements.txt
 
-test-%: 
+deploy-%: 
 	$(VENV_ON) &&\
 	cd ansible && ANSIBLE_CONFIG="$*.cfg" ansible-playbook $(ansible_debug) \
 		-i inventories/$* --extra-vars "ansible_python_interpreter=/usr/local/bin/python3 app=$* version=11.4" \
