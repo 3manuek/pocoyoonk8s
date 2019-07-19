@@ -17,14 +17,19 @@
 #     state: present
 
 - name: Config Map creation
+  vars:
+    K8S_AUTH_API_KEY: '{{K8S_AUTH_API_KEY}}'
+    K8S_AUTH_HOST: '{{K8S_AUTH_HOST}}'  
   k8s:
     state: present
     namespace: default
     definition: "{{ lookup('template', 'postgres-cm.j2') }}"
+  tags: [postgres]
 
 - name: Postgres deploy creation
   k8s:
     state: present
     namespace: default
     src: "{{ lookup('template', 'payload.j2') }}"
+  tags: [postgres]
 
