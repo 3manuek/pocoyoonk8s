@@ -1,9 +1,9 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: {{ component }}-config
+  name: {{ app }}-config
   labels:
-    app: {{ component }}
+    app: {{ app }}
 data:
   POSTGRES_DB: {{ pg_database }}
   POSTGRES_USER: {{ pg_user }}

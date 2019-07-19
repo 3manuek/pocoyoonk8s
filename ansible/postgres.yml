@@ -5,7 +5,7 @@
   connection: local
   # become: true
   vars:
-    component: '{{component}}'
+    app: '{{app}}'
   roles:
     - { role: setup }
     - { role: postgres }

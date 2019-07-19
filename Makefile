@@ -16,5 +16,5 @@ setup: venv
 test-%: 
 	$(VENV_ON) &&\
 	ANSIBLE_CONFIG="ansible/$*.cfg" ansible-playbook $(ansible_debug) \
-		-i ansible/inventories/$*/ --extra-vars "component=$* version=11.4" \
+		-i ansible/inventories/$*/ --extra-vars "ansible_python_interpreter=/usr/local/bin/python3 app=$* version=11.4" \
 		ansible/$*.yml
