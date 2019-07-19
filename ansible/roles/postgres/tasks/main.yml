@@ -47,13 +47,22 @@
       version_dashed: "{{ version  | regex_replace('\\.','-') }}"
       version_major:  "{{ version  | regex_replace('^(?P<major>.+)\\.(?P<minor>\\d+)$', '\\g<major>') }}"
       version_minor:  "{{ version  | regex_replace('^(?P<major>.+)\\.(?P<minor>\\d+)$', '\\g<minor>') }}"
+      namespace: "pocoyoonk8s"
 
 # TODO: add secret for the password 
+
+- name: Create a k8s namespace
+  k8s:
+    name: "{{ namespace }}"
+    api_version: v1
+    kind: Namespace
+    state: present
+
 
 - name: Config Map integrated
   k8s:
     state: present
-    namespace: default
+    namespace: "{{ namespace }}"
     definition:
       apiVersion: v1
       kind: ConfigMap
@@ -72,7 +81,7 @@
 - name: Service integrated
   k8s_raw:
     state: present
-    namespace: default
+    namespace: "{{ namespace }}"
     definition:
       apiVersion: v1
       kind: Service
@@ -91,7 +100,7 @@
 - name: Deployment integrated
   k8s:
     state: present
-    namespace: default
+    namespace: "{{ namespace }}"
     definition:
       apiVersion: extensions/v1beta1
       kind: Deployment
