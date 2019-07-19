@@ -17,37 +17,37 @@
 #     state: present
 
 
-# - name: Config Map creation
-# #   vars:
-# #     K8S_AUTH_API_KEY: '{{K8S_AUTH_API_KEY}}'
-# #     K8S_AUTH_HOST: '{{K8S_AUTH_HOST}}'  
-#   k8s:
-#     api_version: v1
-#     state: present
-#     namespace: default
-#     definition: "{{ lookup('template', 'postgres-cm.j2') }}"
-#   tags: [postgres]
-
-- name: Config Map integrated
+- name: Config Map creation
+#   vars:
+#     K8S_AUTH_API_KEY: '{{K8S_AUTH_API_KEY}}'
+#     K8S_AUTH_HOST: '{{K8S_AUTH_HOST}}'  
   k8s:
+    api_version: v1
     state: present
-    definition:
-      apiVersion: v1
-      kind: ConfigMap
-      metadata:
-        name: "{{ app }}-config"
-        labels:
-          app: "{{ app }}"
-      data:
-        POSTGRES_DB: "{{ pg_database }}"
-        POSTGRES_USER: "{{ pg_user }}"
-        POSTGRES_PASSWORD: "{{ pg_pass }}"
-        VERSION: "{{ version }}"        
+    namespace: default
+    definition: "{{ lookup('template', 'postgres-cm.j2') | from_yaml_all  }}"
+  tags: [postgres]
+
+# - name: Config Map integrated
+#   k8s:
+#     state: present
+#     definition:
+#       apiVersion: v1
+#       kind: ConfigMap
+#       metadata:
+#         name: "{{ app }}-config"
+#         labels:
+#           app: "{{ app }}"
+#       data:
+#         POSTGRES_DB: "{{ pg_database }}"
+#         POSTGRES_USER: "{{ pg_user }}"
+#         POSTGRES_PASSWORD: "{{ pg_pass }}"
+#         VERSION: "{{ version }}"        
 
 - name: Postgres deploy creation
   k8s:
     state: present
     namespace: default
-    src: "{{ lookup('template', 'payload.j2') }}"
+    src: "{{ lookup('template', 'payload.j2') | from_yaml_all  }}"
   tags: [postgres]
 
