@@ -7,11 +7,14 @@ endif
 
 .PHONY: setup venv test-%
 
+ansible-conf-%:
+	ansible-config -c ansible/$*.cfg list
+
 venv-install:
 	python3 -m venv venv
 
 setup: venv-install
-	$(VENV_ON) && pip install --upgrade pip && pip install -r requirements.txt
+	$(VENV_ON) && python3 -m pip install --upgrade pip && python3 -m pip install --user -r requirements.txt
 
 test-%: 
 	$(VENV_ON) &&\

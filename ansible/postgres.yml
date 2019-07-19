@@ -2,7 +2,7 @@
 
 - hosts: localhost
   gather_facts: true
-  connection: local
+  # connection: local
   # become: true
   vars:
     app: '{{app}}'
