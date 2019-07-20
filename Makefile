@@ -54,14 +54,14 @@ clean-%:
 
 deploy: 
 	$(VENV_ON) &&\
-	cd ansible && ANSIBLE_CONFIG="$*.cfg" ansible-playbook $(ansible_debug) \
+	cd ansible && ANSIBLE_CONFIG="$(APP).cfg" ansible-playbook $(ansible_debug) \
 		-i inventories/$(APP) --extra-vars "DEBUG=$(DEBUG) ansible_state=present $(MACRO_ANS_INTER) app=$(APP) version=$(VERSION)" \
 		generic.yml &&\
 	cd .. && deactivate
 
 clean: 
 	$(VENV_ON) &&\
-	cd ansible && ANSIBLE_CONFIG="$*.cfg" ansible-playbook $(ansible_debug) \
+	cd ansible && ANSIBLE_CONFIG="$(APP).cfg" ansible-playbook $(ansible_debug) \
 		-i inventories/$(APP) --extra-vars "DEBUG=$(DEBUG) ansible_state=absent $(MACRO_ANS_INTER) app=$(APP) version=$(VERSION)" \
 		generic.yml &&\
 	cd .. && deactivate
