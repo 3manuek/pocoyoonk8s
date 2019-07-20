@@ -8,6 +8,8 @@ https://kubernetes.io/blog/2019/03/15/kubernetes-setup-using-ansible-and-vagrant
 
 https://kubernetes.io/docs/tasks/administer-cluster/access-cluster-api/
 
+git tag -a v0.1 -m "v0.1"
+
 
 ```
 ~/Repos/pocoyoonk8s(branch:master) » kubectl config view                                                                                             ecalvo@Emanuels-MacBook-Pro
