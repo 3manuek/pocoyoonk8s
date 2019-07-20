@@ -3,7 +3,10 @@ VENV_ON=source venv/bin/activate
 DEFAULT_ANSIBLE_STATE=present
 DEFAULT_APP=postgres
 DEFAULT_VERSION=11.4
-MACRO_ANS_INTER=ansible_python_interpreter=/usr/local/bin/python3
+py3_path := $(shell which python3)
+MACRO_ANS_INTER=ansible_python_interpreter=$(py3_path) 
+#/usr/local/bin/python3
+TAG=0.1
 
 # this adds vvv to playbook
 ifdef DEBUG_ANS
@@ -27,7 +30,8 @@ endif
 
 
 
-.PHONY: setup venv test-%
+.PHONY: setup tag deploy-% clean-% deploy clean venv-install test
+
 
 ansible-conf-%:
 	ansible-config -c ansible/$*.cfg list
@@ -37,6 +41,11 @@ venv-install:
 
 setup: venv-install
 	$(VENV_ON) && python3 -m pip install --upgrade pip && python3 -m pip install --user -r requirements.txt
+
+tag:
+	git tag -a v$(TAG) -m 'v$(TAG)' &&\
+	git push origin --tags
+
 
 deploy-%: 
 	$(VENV_ON) &&\
