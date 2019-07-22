@@ -8,7 +8,35 @@ https://kubernetes.io/blog/2019/03/15/kubernetes-setup-using-ansible-and-vagrant
 
 https://kubernetes.io/docs/tasks/administer-cluster/access-cluster-api/
 
-git tag -a v0.1 -m "v0.1"
+
+```yaml
+- name: Ensure running application
+  k8s_facts:
+    namespace: sample
+    kind: Pod
+    label_selectors:
+      - app=sample-v1-app
+  register: pod_list
+  until: pod_list.resources[0].status.phase == 'Running'
+  delay: 10
+  retries: 3
+```
+
+Its simple and gets the works done.
+
+The second workaround was to use the raw module instead of shell or command
+
+```
+- name: Get running status
+  raw: kubectl get deploy sample-v1-deployment -o json -n sample | jq -r '.status.conditions[] | select(.reason == "MinimumReplicasAvailable") | .status'
+```
+
+I'm not sure about using raw. It looks like a hammer for a simple task.
+But reading about the module makes me think this problem is related with the syntax (quotes, double quotes, |) more than the command it self.
+
+
+https://stackoverflow.com/a/55504560/3264121
+
 
 
 ```
@@ -79,3 +107,14 @@ deployment_resource:
             - secretRef:
                 name: {{ my_secret | k8s_config_resource_name }}
 ```
+
+
+
+
+https://itnext.io/a-practical-kubernetes-operator-using-ansible-an-example-d3a9d3674d5b
+https://medium.com/@trstringer/create-kubernetes-controllers-for-core-and-custom-resources-62fc35ad64a3
+
+
+
+
+https://github.com/operator-framework/operator-sdk/blob/master/doc/ansible/user-guide.md

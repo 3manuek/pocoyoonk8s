@@ -1,6 +1,12 @@
 # pocoyoonk8s
 
-PoC for Ansible against kubernetes API.
+PoC for an Ansible API forged Controller (WIP CRD!) for Kubernetes.
+
+This is mostly useless and it is only intended to make an easy deploy of 
+a singular component. Ideally, you need to build _at least_ a controller,
+but an operator is quite smooth using the operator-sdk.
+
+
 
 ## Start
 
@@ -14,7 +20,6 @@ make clean
 ```
 
 This will create the default deploy (postgres) using `generic` role that executes k8s API calls.
-
 
 
 ## The Law
