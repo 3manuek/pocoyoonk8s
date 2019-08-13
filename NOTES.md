@@ -118,3 +118,9 @@ https://medium.com/@trstringer/create-kubernetes-controllers-for-core-and-custom
 
 
 https://github.com/operator-framework/operator-sdk/blob/master/doc/ansible/user-guide.md
+
+
+```
+kubectl get secrets -n kube-system 
+kubectl describe secret/{secret_name} -n kube-system
+```
