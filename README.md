@@ -7,6 +7,27 @@ a singular component. Ideally, you need to build _at least_ a controller,
 but an operator is quite smooth using the operator-sdk.
 
 
+## Organization
+
+There are two roles which currently do the same, although in different ways:
+
+- `generic` role uses a template and spins {{app}}.j2 against k8s api. 
+- `postgres` role uses a different mechanism, which is declaring the API call as a
+   role task.
+
+So, the following commands will do the same, but differently. If you want to add
+more apps (that is, more calls), add the templates and the necessary .cfg:
+
+```
+make deploy             # uses generic
+make deploy-postgres    # uses postgres role
+```
+
+Options:
+
+```
+make DEBUG=1 APP=postgres VERSION=11.5 deploy
+```
 
 ## Start
 
