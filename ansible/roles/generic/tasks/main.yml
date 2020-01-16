@@ -50,7 +50,7 @@
 
 - name: Postgres deploy creation
   k8s_raw:
-    api_version: v1
+    api_version: apps/v1
     state: "{{ansible_state}}"
     namespace: "{{namespace}}"
     definition: "{{ lookup('template', '{{app}}.j2') | from_yaml  }}" 
