@@ -20,6 +20,9 @@ items:
   metadata:
     name: {{ app }}{{ version_dashed }}-dply
   spec:
+    selector:
+      matchLabels:
+        app: {{ app }}{{ version_dashed }}
     template:
       metadata:
         labels:
