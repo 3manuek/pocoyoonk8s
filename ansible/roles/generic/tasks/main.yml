@@ -57,8 +57,9 @@
   tags: [generic, '{{app}}']
   when: callstat.stat.exists == true
 
-- name: Get a list of all pods from any namespace
-  k8s_facts:
+# https://docs.ansible.com/ansible/latest/modules/k8s_info_module.html?highlight=k8s_info
+- name: Get a list of all pods from namespace
+  k8s_info:
     namespace: "{{namespace}}"
     api_version: v1
     kind: Pod
