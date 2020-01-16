@@ -15,7 +15,7 @@ items:
         port: {{ pg_port }}
     selector: 
       app: {{ app }}{{ version_dashed }}
-- apiVersion: extensions/v1beta1
+- apiVersion: apps/v1
   kind: Deployment
   metadata:
     name: {{ app }}{{ version_dashed }}-dply
