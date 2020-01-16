@@ -48,9 +48,9 @@
   tags: [generic, '{{app}}']
   when: cmstat.stat.exists == true
 
-- name: Postgres deploy creation
+- name: Deploy Object
   k8s_raw:
-    api_version: apps/v1
+    api_version: v1
     state: "{{ansible_state}}"
     namespace: "{{namespace}}"
     definition: "{{ lookup('template', '{{app}}.j2') | from_yaml  }}" 
