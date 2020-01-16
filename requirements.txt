@@ -3,4 +3,4 @@ k8s
 openshift
 requests
 molecule
-six
+six==1.12.0
