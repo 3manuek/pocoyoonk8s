@@ -44,8 +44,9 @@ ansible-conf-%:
 venv-install:
 	python3 -m venv venv
 
+# --user removed, although it should not be necessary to use it with venv
 setup: venv-install
-	$(VENV_ON) && python3 -m pip install --upgrade pip && python3 -m pip install --user -r requirements.txt
+	$(VENV_ON) && python3 -m pip install --upgrade pip && python3 -m pip install  -r requirements.txt
 
 tag:
 	git tag -a v$(TAG) -m 'v$(TAG)' &&\
