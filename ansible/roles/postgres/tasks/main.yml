@@ -94,6 +94,9 @@
       metadata:
         name: "{{ app }}{{ version_dashed }}-dply"
       spec:
+          selector:
+            matchLabels:
+              app: "{{ app }}{{ version_dashed }}"
           template:
             metadata:
               labels:
@@ -114,21 +117,21 @@
 # is better as you touch the YAML template instead a different file.
 # This allows more concurrent work.
 
-- name: Config Map creation
+#- name: Config Map creation
 #   vars:
 #     K8S_AUTH_API_KEY: '{{K8S_AUTH_API_KEY}}'
 #     K8S_AUTH_HOST: '{{K8S_AUTH_HOST}}'  
-  k8s_raw:
-    api_version: v1
-    state: "{{ansible_state}}"
-    namespace: "{{namespace}}"
-    definition: "{{ lookup('template', '{{app}}-cm.j2') | from_yaml  }}"
-  tags: [postgres]
+#  k8s_raw:
+#    api_version: v1
+#    state: "{{ansible_state}}"
+#    namespace: "{{namespace}}"
+#    definition: "{{ lookup('template', '{{app}}-cm.j2') | from_yaml  }}"
+#  tags: [postgres]
 
-- name: Postgres deploy creation
-  k8s_raw:
-    api_version: v1
-    state: "{{ansible_state}}"
-    namespace: "{{namespace}}"
-    definition: "{{ lookup('template', '{{app}}.j2') | from_yaml  }}" 
-  tags: [postgres]
+#- name: Postgres deploy creation
+#  k8s_raw:
+#    api_version: v1
+#    state: "{{ansible_state}}"
+#    namespace: "{{namespace}}"
+#    definition: "{{ lookup('template', '{{app}}.j2') | from_yaml  }}" 
+#  tags: [postgres]
