@@ -1,11 +1,15 @@
 # pocoyoonk8s
 
-PoC for an Ansible API forged Controller (WIP CRD!) for Kubernetes.
+> Note: this repository isn't maintained anymore.
+
+PoC for an Ansible API forged Controller for Kubernetes.
 
 This is mostly useless and it is only intended to make an easy deploy of 
 a singular component. Ideally, you need to build _at least_ a controller,
 but an operator is quite smooth using the operator-sdk.
 
+The intention of this laboratory was to show the backbone k8s API
+calls during trainings for entry levels.
 
 ## Organization
 
